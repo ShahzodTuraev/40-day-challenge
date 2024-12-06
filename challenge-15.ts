@@ -1,36 +1,14 @@
-function canChange(start: string, target: string): boolean {
-  const length = start.length;
-  let startIdx = 0;
-  let targetIdx = 0;
-
-  while (true) {
-    while (startIdx < length && start[startIdx] === "_") {
-      ++startIdx;
+// 2554. Maximum Number of Integers to Choose From a Range I
+function maxCount(banned: number[], n: number, maxSum: number): number {
+  let arr: number[] = [];
+  let i: number = 1;
+  let sum: number = 0;
+  while (i <= n) {
+    if (!banned.includes(i) && sum + i <= maxSum) {
+      arr.push(i);
+      sum += i;
     }
-    while (targetIdx < length && target[targetIdx] === "_") {
-      ++targetIdx;
-    }
-
-    if (startIdx === length && targetIdx === length) {
-      return true;
-    }
-
-    if (
-      startIdx === length ||
-      targetIdx === length ||
-      start[startIdx] !== target[targetIdx]
-    ) {
-      return false;
-    }
-
-    if (
-      (start[startIdx] === "L" && startIdx < targetIdx) ||
-      (start[startIdx] === "R" && startIdx > targetIdx)
-    ) {
-      return false;
-    }
-
-    ++startIdx;
-    ++targetIdx;
+    i++;
   }
+  return arr.length;
 }

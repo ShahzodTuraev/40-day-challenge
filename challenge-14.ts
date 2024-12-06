@@ -1,13 +1,36 @@
-// 2109. Adding Spaces to a String
-function addSpaces(s: string, spaces: number[]): string {
-  let readyString: string = "";
-  let spaceIndex: number = 0;
-  for (let i: number = 0; i < s.length; i++) {
-    if (spaces[spaceIndex] === i) {
-      readyString += " ";
-      spaceIndex++;
+function canChange(start: string, target: string): boolean {
+  const length = start.length;
+  let startIdx = 0;
+  let targetIdx = 0;
+
+  while (true) {
+    while (startIdx < length && start[startIdx] === "_") {
+      ++startIdx;
     }
-    readyString += s[i];
+    while (targetIdx < length && target[targetIdx] === "_") {
+      ++targetIdx;
+    }
+
+    if (startIdx === length && targetIdx === length) {
+      return true;
+    }
+
+    if (
+      startIdx === length ||
+      targetIdx === length ||
+      start[startIdx] !== target[targetIdx]
+    ) {
+      return false;
+    }
+
+    if (
+      (start[startIdx] === "L" && startIdx < targetIdx) ||
+      (start[startIdx] === "R" && startIdx > targetIdx)
+    ) {
+      return false;
+    }
+
+    ++startIdx;
+    ++targetIdx;
   }
-  return readyString;
 }
