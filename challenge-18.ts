@@ -1,33 +1,11 @@
-// 2981. Find Longest Special Substring That Occurs Thrice I
-function maximumLength(s: string): number {
-  const lengthOfString = s.length;
-  let leftPointer = 0;
-  let rightPointer = lengthOfString;
-  const doesFragmentSizeWork = (fragmentSize: number): boolean => {
-    const letterCounts: number[] = Array(26).fill(0);
-    for (let i = 0; i < lengthOfString; ) {
-      let endIndex = i + 1;
-      while (endIndex < lengthOfString && s[endIndex] === s[i]) {
-        endIndex++;
-      }
-      const letterIndex = s[i].charCodeAt(0) - "a".charCodeAt(0);
-      letterCounts[letterIndex] += Math.max(0, endIndex - i - fragmentSize + 1);
-      if (letterCounts[letterIndex] >= 3) {
-        return true;
-      }
-      i = endIndex;
-    }
-    return false;
-  };
-
-  while (leftPointer < rightPointer) {
-    const midPoint = (leftPointer + rightPointer + 1) >> 1;
-    if (doesFragmentSizeWork(midPoint)) {
-      leftPointer = midPoint;
-    } else {
-      rightPointer = midPoint - 1;
+// 3152. Special Array II
+function isArraySpecial(nums: number[], queries: number[][]): boolean[] {
+  const n = nums.length;
+  const d: number[] = Array.from({ length: n }, (_, i) => i);
+  for (let i = 1; i < n; ++i) {
+    if (nums[i] % 2 !== nums[i - 1] % 2) {
+      d[i] = d[i - 1];
     }
   }
-
-  return leftPointer === 0 ? -1 : leftPointer;
+  return queries.map(([from, to]) => d[to] <= from);
 }
