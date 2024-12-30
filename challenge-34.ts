@@ -1,4 +1,4 @@
-// 806. Number of Lines To Write String
+// 806.Number of Lines To Write String
 function numberOfLines(widths: number[], s: string): number[] {
   const letters: string[] = [
     "a",
